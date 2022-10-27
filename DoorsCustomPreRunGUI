@@ -188,4 +188,4 @@ UIGridLayout.Parent = Items
 UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIGridLayout.CellPadding = UDim2.new(0.00999999978, 4, 0.0299999993, 4)
-UIGridLayout.CellSize = UDim2.new(0.100000001, 400, 0.100000001, -4)
+UIGridLayout.CellSize = UDim2.new(0.100000001, 500, 0.100000001, -4)
