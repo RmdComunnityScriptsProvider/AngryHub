@@ -1,0 +1,49 @@
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:GetChildren()) do
+	if v:IsA("TextButton") then
+		v.Parent = game.Workspace
+	end
+end	
+
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:Destroy()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RmdComunnityScriptsProvider/AngryHub/main/DoorsCustomPreRunGUI", true))()
+
+for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+	if v:IsA("TextButton") then
+		v.Parent = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items
+	end
+end	
+
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+local Humanoid = Character.Humanoid
+local PlayerGui = Player.PlayerGui
+local MainUI = PlayerGui.MainUI
+local ItemList = MainUI.ItemShop.Items
+local PreRun = MainUI.Initiator.Main_Game.PreRun
+local Backpack = Player.Backpack
+local Items = {}
+local function CreateTool(Name, Image)
+    if Backpack:FindFirstChild(Name) then
+        Backpack[Name]:Destroy()
+    end
+    if Character:FindFirstChild(Name) then
+        Character[Name]:Destroy()
+    end
+    local Tool = Instance.new("Tool")
+    Tool.TextureId = Image
+    Tool.Name = Name
+    Tool.Parent = Backpack
+    return Tool
+end
+local function CreateShopItem(Name, Description, Price, Stack, Image)
+    local Selected = false
+    local Item = ItemList.ItemShop_Template:Clone()
+    Item.Parent = ItemList
+    Item.Name = "ItemShop_" .. Name
+	Item.Visible = true
+    Item.Title.Text = Name
+    Item.Desc.Text = Description
+    Item.Price.Text = Price
+	Item.Stack.Text = Stack
+    Item.ImageLabel.Image = Image
