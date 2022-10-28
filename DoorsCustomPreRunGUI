@@ -1,4 +1,9 @@
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:GetChildren()) do
+	if v.Name == "ItemShop_Template" ten
+		v:Destroy()
+	end
+end	
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:GetChildren()) do
 	if v:IsA("TextButton") then
 		v.Parent = game.Workspace
 	end
@@ -194,8 +199,8 @@ UICorner_6.Parent = Stack
 UIGridLayout.Parent = Items
 UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout.CellPadding = UDim2.new(0.00999999978, 4, 0.0299999993, 4)
-UIGridLayout.CellSize = UDim2.new(0.100000001, 500, 0.100000001, -4)
+UIGridLayout.CellPadding = UDim2.new(0, 20, 0, 20)
+UIGridLayout.CellSize = UDim2.new(0, 440, 0, 75)
 
 for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 	if v:IsA("TextButton") then
