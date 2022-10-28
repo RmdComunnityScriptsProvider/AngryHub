@@ -34,8 +34,8 @@ if List.ClassName ~= "ScrollingFrame" then
 
         SelfModules.UI.Create("UIGridLayout", {
             SortOrder = Enum.SortOrder.LayoutOrder,
-            CellPadding = UDim2.new(0, 15, 0, 15),
-            CellSize = UDim2.new(0.5, -8, 0, 80),
+            CellPadding = UDim2.new(0, 20, 0, 20),
+            CellSize = UDim2.new(0, 440, 0, 65),
         }),
 
         SelfModules.UI.Create("UIPadding", {
