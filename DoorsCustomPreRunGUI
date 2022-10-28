@@ -1,232 +1,181 @@
-for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:GetChildren()) do
-	if v.Name == "ItemShop_Template" then
-		v:Destroy()
-	end
-end	
-for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:GetChildren()) do
-	if v:IsA("TextButton") then
-		v.Parent = game.Workspace
-	end
-end	
+-- Services
 
-game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:Destroy()
--- Version: 3.2
+local Players = game:GetService("Players")
+local ReSt = game:GetService("ReplicatedStorage")
 
--- Instances:
+-- Variables
 
-local Items = Instance.new("ScrollingFrame")
-local ItemShop_Template = Instance.new("TextButton")
-local UICorner = Instance.new("UICorner")
-local UIPadding = Instance.new("UIPadding")
-local ImageLabel = Instance.new("ImageLabel")
-local UICorner_2 = Instance.new("UICorner")
-local Price = Instance.new("TextLabel")
-local UICorner_3 = Instance.new("UICorner")
-local UIPadding_2 = Instance.new("UIPadding")
-local ImageLabel_2 = Instance.new("ImageLabel")
-local Title = Instance.new("TextLabel")
-local UICorner_4 = Instance.new("UICorner")
-local Desc = Instance.new("TextLabel")
-local UICorner_5 = Instance.new("UICorner")
-local Stack = Instance.new("TextLabel")
-local UICorner_6 = Instance.new("UICorner")
-local UIGridLayout = Instance.new("UIGridLayout")
+local Plr = Players.LocalPlayer
 
---Properties:
+local SelfModules = {
+    UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/UI.lua"))(),
+    Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))(),
+}
 
-Items.Name = "Items"
-Items.Parent = game.Players.LocalPlayer.PlayerGui.MainUI.ItemShop
-Items.Active = true
-Items.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Items.BorderSizePixel = 0
-Items.ClipsDescendants = true
-Items.LayoutOrder = 3
-Items.Position = UDim2.new(-0.00105509954, -1, 0.178200021, 0)
-Items.Size = UDim2.new(1.001055, 0, 0.600000024, 0)
+local CustomShop = { Selected = {} }
 
-ItemShop_Template.Name = "ItemShop_Template"
-ItemShop_Template.Parent = Items
-ItemShop_Template.AnchorPoint = Vector2.new(0.5, 0.5)
-ItemShop_Template.BackgroundColor3 = Color3.fromRGB(185, 127, 104)
-ItemShop_Template.BackgroundTransparency = 0.900
-ItemShop_Template.BorderSizePixel = 0
-ItemShop_Template.LayoutOrder = 4
-ItemShop_Template.Position = UDim2.new(0.5, 0, 0.5, 0)
-ItemShop_Template.Size = UDim2.new(1, 0, 0.230000004, 0)
-ItemShop_Template.Visible = false
-ItemShop_Template.ZIndex = 50
-ItemShop_Template.Font = Enum.Font.GothamMedium
-ItemShop_Template.Text = ""
-ItemShop_Template.TextColor3 = Color3.fromRGB(255, 255, 255)
-ItemShop_Template.TextScaled = true
-ItemShop_Template.TextSize = 14.000
-ItemShop_Template.TextWrapped = true
+-- Items List
 
-UICorner.CornerRadius = UDim.new(0.150000006, 0)
-UICorner.Parent = ItemShop_Template
+local List = Plr.PlayerGui.MainUI.ItemShop.Items
 
-UIPadding.Parent = ItemShop_Template
-UIPadding.PaddingBottom = UDim.new(0.100000001, 0)
-UIPadding.PaddingLeft = UDim.new(0.0250000004, 0)
-UIPadding.PaddingRight = UDim.new(0.0250000004, 0)
-UIPadding.PaddingTop = UDim.new(0.100000001, 0)
+if List.ClassName ~= "ScrollingFrame" then
+    List = SelfModules.UI.Create("ScrollingFrame", {
+        Name = "Items",
+        Active = true,
+        AnchorPoint = Vector2.new(0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        CanvasSize = UDim2.new(0, 0, 0, 0),
+        Position = UDim2.new(0.5, 0, 0.18, 0),
+        Size = UDim2.new(1, 0, 0.6, 0),
+        ZIndex = 5,
+        HorizontalScrollBarInset = Enum.ScrollBarInset.Always,
+        ScrollBarThickness = 0,
 
-ImageLabel.Parent = ItemShop_Template
-ImageLabel.AnchorPoint = Vector2.new(0, 0.5)
-ImageLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ImageLabel.BackgroundTransparency = 1.000
-ImageLabel.BorderSizePixel = 0
-ImageLabel.Position = UDim2.new(0, 0, 0.5, 0)
-ImageLabel.Size = UDim2.new(1, 0, 1, 0)
-ImageLabel.SizeConstraint = Enum.SizeConstraint.RelativeYY
-ImageLabel.ZIndex = 55
-ImageLabel.Image = "rbxassetid://10264432376"
+        SelfModules.UI.Create("UIGridLayout", {
+            SortOrder = Enum.SortOrder.LayoutOrder,
+            CellPadding = UDim2.new(0, 15, 0, 15),
+            CellSize = UDim2.new(0.5, -8, 0, 80),
+        }),
 
-UICorner_2.CornerRadius = UDim.new(0.100000001, 0)
-UICorner_2.Parent = ImageLabel
+        SelfModules.UI.Create("UIPadding", {
+            PaddingBottom = UDim.new(0, 4),
+            PaddingLeft = UDim.new(0, 4),
+            PaddingRight = UDim.new(0, 4),
+            PaddingTop = UDim.new(0, 4),
+        }),
+    })
 
-Price.Name = "Price"
-Price.Parent = ItemShop_Template
-Price.Active = true
-Price.AnchorPoint = Vector2.new(1, 1)
-Price.BackgroundColor3 = Color3.fromRGB(212, 132, 123)
-Price.BackgroundTransparency = 1.000
-Price.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Price.Position = UDim2.new(1, 0, 1, 0)
-Price.Size = UDim2.new(0.300000012, 0, 1, 0)
-Price.ZIndex = 55
-Price.Font = Enum.Font.Gotham
-Price.Text = "50"
-Price.TextColor3 = Color3.fromRGB(255, 201, 179)
-Price.TextScaled = true
-Price.TextSize = 14.000
-Price.TextWrapped = true
-Price.TextXAlignment = Enum.TextXAlignment.Right
-
-UICorner_3.CornerRadius = UDim.new(0.150000006, 0)
-UICorner_3.Parent = Price
-
-UIPadding_2.Parent = Price
-UIPadding_2.PaddingBottom = UDim.new(0.100000001, 0)
-UIPadding_2.PaddingLeft = UDim.new(0.0250000004, 0)
-UIPadding_2.PaddingRight = UDim.new(0.0250000004, 0)
-UIPadding_2.PaddingTop = UDim.new(0.100000001, 0)
-
-ImageLabel_2.Parent = Price
-ImageLabel_2.AnchorPoint = Vector2.new(0, 0.5)
-ImageLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ImageLabel_2.BackgroundTransparency = 1.000
-ImageLabel_2.BorderSizePixel = 0
-ImageLabel_2.Position = UDim2.new(0, 0, 0.5, 0)
-ImageLabel_2.Size = UDim2.new(1, 0, 1, 0)
-ImageLabel_2.SizeConstraint = Enum.SizeConstraint.RelativeYY
-ImageLabel_2.Visible = false
-ImageLabel_2.ZIndex = 55
-ImageLabel_2.Image = "rbxassetid://7152862528"
-ImageLabel_2.ScaleType = Enum.ScaleType.Fit
-
-Title.Name = "Title"
-Title.Parent = ItemShop_Template
-Title.Active = true
-Title.BackgroundColor3 = Color3.fromRGB(139, 115, 80)
-Title.BackgroundTransparency = 1.000
-Title.BorderSizePixel = 0
-Title.LayoutOrder = 1
-Title.Position = UDim2.new(0.224999994, 0, -0.0500000007, 0)
-Title.Size = UDim2.new(0.5, 0, 0.75, 0)
-Title.ZIndex = 55
-Title.Font = Enum.Font.Oswald
-Title.Text = "Lockpick"
-Title.TextColor3 = Color3.fromRGB(255, 201, 179)
-Title.TextScaled = true
-Title.TextSize = 14.000
-Title.TextStrokeColor3 = Color3.fromRGB(47, 47, 47)
-Title.TextWrapped = true
-Title.TextXAlignment = Enum.TextXAlignment.Left
-Title.TextYAlignment = Enum.TextYAlignment.Top
-
-UICorner_4.CornerRadius = UDim.new(0.5, 0)
-UICorner_4.Parent = Title
-
-Desc.Name = "Desc"
-Desc.Parent = ItemShop_Template
-Desc.Active = true
-Desc.AnchorPoint = Vector2.new(0, 1)
-Desc.BackgroundColor3 = Color3.fromRGB(139, 115, 80)
-Desc.BackgroundTransparency = 1.000
-Desc.BorderSizePixel = 0
-Desc.LayoutOrder = 1
-Desc.Position = UDim2.new(0.224999994, 0, 1, 0)
-Desc.Size = UDim2.new(0.600000024, 0, 0.400000006, 0)
-Desc.ZIndex = 55
-Desc.Font = Enum.Font.Oswald
-Desc.Text = "May break at any time"
-Desc.TextColor3 = Color3.fromRGB(255, 201, 179)
-Desc.TextScaled = true
-Desc.TextSize = 14.000
-Desc.TextStrokeColor3 = Color3.fromRGB(47, 47, 47)
-Desc.TextWrapped = true
-Desc.TextXAlignment = Enum.TextXAlignment.Left
-
-UICorner_5.CornerRadius = UDim.new(0.5, 0)
-UICorner_5.Parent = Desc
-
-Stack.Name = "Stack"
-Stack.Parent = ItemShop_Template
-Stack.Active = true
-Stack.AnchorPoint = Vector2.new(0, 1)
-Stack.BackgroundColor3 = Color3.fromRGB(139, 115, 80)
-Stack.BackgroundTransparency = 1.000
-Stack.BorderSizePixel = 0
-Stack.LayoutOrder = 1
-Stack.Position = UDim2.new(0.0170439575, 0, 0.999999762, 0)
-Stack.Size = UDim2.new(0.158824712, 0, 0.307697296, 0)
-Stack.Visible = false
-Stack.ZIndex = 55
-Stack.Font = Enum.Font.Oswald
-Stack.Text = "x1"
-Stack.TextColor3 = Color3.fromRGB(255, 201, 179)
-Stack.TextScaled = true
-Stack.TextSize = 14.000
-Stack.TextStrokeColor3 = Color3.fromRGB(47, 47, 47)
-Stack.TextWrapped = true
-Stack.TextXAlignment = Enum.TextXAlignment.Right
-Stack.TextYAlignment = Enum.TextYAlignment.Bottom
-
-UICorner_6.CornerRadius = UDim.new(0.5, 0)
-UICorner_6.Parent = Stack
-
-UIGridLayout.Parent = Items
-UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout.CellPadding = UDim2.new(0, 20, 0, 20)
-UIGridLayout.CellSize = UDim2.new(0, 440, 0, 75)
-
-for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-	if v:IsA("TextButton") then
-		v.Parent = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items
-	end
+    -- Parent existing items to list
+    
+    for _, v in next, Plr.PlayerGui.MainUI.ItemShop.Items:GetChildren() do
+        if v.ClassName == "TextButton" then
+            v.Parent = List
+        end
+    end
+    
+    Plr.PlayerGui.MainUI.ItemShop.Items:Destroy()
+    List.Parent = Plr.PlayerGui.MainUI.ItemShop
 end
 
-local Player = game.Players.LocalPlayer
-local Character = Player.Character
-local Humanoid = Character.Humanoid
-local PlayerGui = Player.PlayerGui
-local MainUI = PlayerGui.MainUI
-local ItemList = MainUI.ItemShop.Items
-local PreRun = MainUI.Initiator.Main_Game.PreRun
-local Backpack = Player.Backpack
-local Items = {}
-local function CreateTool(Name, Image)
-    if Backpack:FindFirstChild(Name) then
-        Backpack[Name]:Destroy()
-    end
-    if Character:FindFirstChild(Name) then
-        Character[Name]:Destroy()
-    end
-    local Tool = Instance.new("Tool")
-    Tool.TextureId = Image
-    Tool.Name = Name
-    Tool.Parent = Backpack
-    return Tool
+-- Functions
+
+CustomShop.CreateItem = function(self, config, callback)
+    task.spawn(function()
+        -- Config setup
+
+        local rawItemName = string.gsub(config.Title, " ", "")
+
+        config.RawItemName = string.sub(rawItemName, 1, #rawItemName - 1)
+
+        -- Check
+
+        if List:FindFirstChild("CustomItem_".. config.RawItemName) then
+            List["CustomItem_".. config.RawItemName]:Destroy()
+        end
+
+        if ReSt.ItemShop:FindFirstChild(config.RawItemName) then
+            ReSt.ItemShop[config.RawItemName]:Destroy()
+        end
+
+        -- Item creation
+        
+        local Item = { Config = config, Callback = callback }
+
+        local button = List:FindFirstChildOfClass("TextButton"):Clone()
+        local selected = false
+        local connections = {}
+
+        button.Visible = true
+        button.Name = "CustomItem_".. config.RawItemName
+        button.Title.Text = config.Title
+        button.Desc.Text = config.Desc
+        button.ImageLabel.Image = LoadCustomAsset(config.Image)
+        button.Price.Text = config.Price
+        button:SetAttribute("Price", config.Price)
+
+        if not config.Stack or config.Stack <= 1 then
+            button.Stack.Visible = false
+        else
+            button.Stack.Visible = true
+            button.Stack.Text = "x".. config.Stack
+        end
+        
+        button.Parent = List
+        Item.Button = button
+
+        -- Folder
+
+        local folder = ReSt.ItemShop:GetChildren()[1]:Clone()
+        folder.Name = config.RawItemName
+
+        for i, v in next, folder:GetAttributes() do
+            if config[i] then
+                folder:SetAttribute(config[i])
+            end
+        end
+
+        folder.Parent = ReSt.ItemShop
+
+        -- Select item
+
+        connections.select = button.MouseButton1Down:Connect(function()
+            selected = not selected
+
+            button.BackgroundTransparency = selected and 0.5 or 0.9
+            Plr.PlayerGui.MainUI.Initiator.Main_Game.PreRun[selected and "Press" or "PressDown"]:Play()
+
+            --
+
+            local upvs = debug.getupvalues(getconnections(List:FindFirstChildOfClass("TextButton").MouseButton1Down)[1].Function)
+            local selectedItems = upvs[1]
+
+            if selected then
+                selectedItems[#selectedItems + 1] = config.RawItemName
+                self.Selected[#self.Selected + 1] = Item
+            else
+                table.remove(selectedItems, table.find(selectedItems, config.RawItemName))
+                table.remove(self.Selected, table.find(self.Selected, Item))
+            end
+
+            upvs[4]() -- Update price
+        end)
+
+        -- Update list height
+
+        local buttonsCount = 0
+
+        for _, v in next, List:GetChildren() do
+            if v.ClassName == "TextButton" and v.Visible then
+                buttonsCount += 1
+            end
+        end
+
+        local rowCount = math.round(buttonsCount / 2)
+        local rowHeight = 8 + rowCount * 80 + (rowCount - 1) * 15
+        
+        List.CanvasSize = UDim2.new(0, 0, 0, rowHeight)
+    end)
 end
+
+-- Scripts
+
+local confirmConnection; confirmConnection = Plr.PlayerGui.MainUI.ItemShop.Confirm.MouseButton1Down:Connect(function()
+    confirmConnection:Disconnect()
+
+    for _, v in next, CustomShop.Selected do
+        if v.Config.ToolAssetId then
+            local tool = LoadCustomInstance(v.Config.ToolAssetId)
+
+            if typeof(tool) == "Instance" and tool.ClassName == "Tool" then
+                tool.Parent = Plr.Backpack
+
+                if typeof(v.Callback) == "function" then
+                    v.Callback(tool)
+                end
+            end
+        end
+    end
+end)
+
+return CustomShop
