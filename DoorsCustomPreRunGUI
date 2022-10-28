@@ -1,3 +1,10 @@
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:GetChildren()) do
+	if v:IsA("TextButton") then
+		v.Parent = game.Workspace
+	end
+end	
+
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items:Destroy()
 -- Version: 3.2
 
 -- Instances:
@@ -189,3 +196,71 @@ UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIGridLayout.CellPadding = UDim2.new(0.00999999978, 4, 0.0299999993, 4)
 UIGridLayout.CellSize = UDim2.new(0.100000001, 500, 0.100000001, -4)
+
+for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+	if v:IsA("TextButton") then
+		v.Parent = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Items
+	end
+end
+
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+local Humanoid = Character.Humanoid
+local PlayerGui = Player.PlayerGui
+local MainUI = PlayerGui.MainUI
+local ItemList = MainUI.ItemShop.Items
+local PreRun = MainUI.Initiator.Main_Game.PreRun
+local Backpack = Player.Backpack
+local Items = {}
+local function CreateTool(Name, Image)
+    if Backpack:FindFirstChild(Name) then
+        Backpack[Name]:Destroy()
+    end
+    if Character:FindFirstChild(Name) then
+        Character[Name]:Destroy()
+    end
+    local Tool = Instance.new("Tool")
+    Tool.TextureId = Image
+    Tool.Name = Name
+    Tool.Parent = Backpack
+    return Tool
+end
+local function CreateShopItem(Name, Description, Price, Stack, StackVisible, Image,  ToolId)
+    local Selected = false
+    local Item = ItemList.ItemShop_Template:Clone()
+    Item.Parent = ItemList
+    Item.Name = "ItemShop_" .. Name
+	Item.Visible = true
+    Item.Title.Text = Name
+    Item.Desc.Text = Description
+    Item.Price.Text = Price
+    Item.Stack.Text = Stack
+	Item.Stack.Visible = StackVisible
+    Item.ImageLabel.Image = Image
+	Item.Parent.Parent = "rbxassetid://"..ToolId
+    Item.MouseButton1Down:Connect(function()
+        if not Selected then
+            Item.BackgroundTransparency = 0.5
+            PreRun.Press:Play()
+			game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Confirm.Price.Text = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Confirm.Price.Text + Item.Price.Text
+        else
+            Item.BackgroundTransparency = 0.9
+            PreRun.PressDown:Play()
+			game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Confirm.Price.Text = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Confirm.Price.Text - Item.Price.Text
+        end
+        Selected = not Selected
+    end)
+    ItemList.Parent.Confirm.MouseButton1Down:Connect(function()
+        if Selected then
+            task.wait(0.7)
+            CreateTool(Name, Image)
+			game:GetService("Players").LocalPlayer.PlayerGui.PermUI.Topbar.Knobs.Text = game:GetService("Players").LocalPlayer.PlayerGui.PermUI.Topbar.Knobs.Text - Item.Price.Text
+            if getgenv().Customtool == true then
+                game.Players.LocalPlayer.Backpack[Item.Name]:Destroy()
+                game:GetObjects(ToolId)[1].Parent = game.Players.LocalPlayer.Backpack
+                wait()
+                game.Players.LocalPlayer.Backpack[Item.Name].TextureId = Image
+            end
+        end
+    end)
+end
