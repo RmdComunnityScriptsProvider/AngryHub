@@ -90,8 +90,8 @@ Items.Size = UDim2.new(1.05257034, 0, 0.630380273, 0)
 UIGridLayout.Parent = Items
 UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout.CellPadding = UDim2.new(0, 15, 0, 15)
-UIGridLayout.CellSize = UDim2.new(0, 450, 0, 100)
+UIGridLayout.CellPadding = UDim2.new(0, 25, 0, 25)
+UIGridLayout.CellSize = UDim2.new(0, 675, 0, 125)
 
 ItemShop_Template.Name = "ItemShop_Template"
 ItemShop_Template.Parent = Items
