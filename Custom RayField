@@ -150,23 +150,23 @@ task.spawn(function()
 			MorphGUIWaterMarkModified = true
 		elseif MorphGUIWaterMark.Enabled == false then
 			MorphGUIWaterMarkModified = true
-		elseif TextLabel.TextTransparency ~= 0 then
+		elseif Text23423423Label234234234234.TextTransparency ~= 0 then
 			MorphGUIWaterMarkModified = true
-		elseif Frame.Visible == false then
+		elseif Frame234234234234.Visible == false then
 			MorphGUIWaterMarkModified = true
-		elseif TextLabel.Visible == false then
+		elseif Text23423423Label234234234234.Visible == false then
 			MorphGUIWaterMarkModified = true
-		elseif TextLabel.Parent == nil then
+		elseif Text23423423Label234234234234.Parent == nil then
 			MorphGUIWaterMarkModified = true
-		elseif Frame.Parent == nil then
+		elseif Frame234234234234.Parent == nil then
 			MorphGUIWaterMarkModified = true
-		elseif UIStroke.Parent == nil then
+		elseif U234234ISt3422r234234o234234ke.Parent == nil then
 			MorphGUIWaterMarkModified = true
-		elseif UIStroke.Enabled == false then
+		elseif U234234ISt3422r234234o234234ke.Enabled == false then
 			MorphGUIWaterMarkModified = true
 		end
 		if MorphGUIWaterMarkModified == false then
-			TextLabel.TextColor3 = Color3.fromHSV(tick() * 50 % 255/255, 1, 1)
+			Text23423423Label234234234234.TextColor3 = Color3.fromHSV(tick() * 50 % 255/255, 1, 1)
 			UIStroke.Color = Color3.fromHSV(tick() * 25 % 255/255, 1, 1)
 		else
 			if Banned == false and getgenv().CheckPenguinManiackMorphScriptModifiedForScreenGUIAndTheTextLabelThatIsInIt == true then
